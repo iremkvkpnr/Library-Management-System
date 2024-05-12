@@ -31,6 +31,9 @@ public class AuthenticationService {
      * @return Authentication response with JWT token
      */
     public AuthenticationResponse register(RegisterRequest request) {
+        if (userRepository.existsByEmail(request.email())) {
+            throw new UserValidationException("Email already exists: " + request.email());
+        }
         User user = User.builder()
                 .name(request.name())
                 .email(request.email())

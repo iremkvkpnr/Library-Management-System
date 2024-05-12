@@ -41,6 +41,10 @@ public class UserService {
      */
     @Transactional
     public UserResponse registerUser(UserRequest request) {
+        if (userRepository.existsByEmail(request.email())) {
+            log.error("Email already exists: {}", request.email());
+            throw new UserValidationException("Email already exists: " + request.email());
+        }
         User user = UserMapper.toEntity(request);
         User saved = userRepository.save(user);
         log.info("New user registered: {}", saved);

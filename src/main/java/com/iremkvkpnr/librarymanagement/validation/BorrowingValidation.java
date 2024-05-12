@@ -32,11 +32,16 @@ public class BorrowingValidation {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new BorrowingValidationException("User not found"));
 
+        if (user.getRole() == null) {
+            throw new BorrowingValidationException("User role cannot be null");
+        }
+
         if (user.getRole() == User.Role.LIBRARIAN) {
             throw new BorrowingValidationException("Librarians cannot borrow books");
         }
         Book book = bookRepository.findById(bookId)
                 .orElseThrow(() -> new BorrowingValidationException("Book not found"));
+
         if (book.getAvailableCopies() <= 0) {
             throw new BorrowingValidationException(BorrowingValidationException.BOOK_NOT_AVAILABLE);
         }

@@ -110,7 +110,7 @@ public class BorrowingService {
      * @throws BorrowingValidationException if the user is not authorized or record not found
      */
     @Transactional
-    public void returnBook(Long userId, Long borrowingId) {
+    public Borrowing returnBook(Long userId, Long borrowingId) {
         // Find the borrowing record
         Borrowing borrowing = borrowingRepository.findById(borrowingId)
                 .orElseThrow(() -> new BorrowingValidationException("Borrowing not found with ID: " + borrowingId));
@@ -124,7 +124,7 @@ public class BorrowingService {
         Book book = borrowing.getBook();
         book.setAvailableCopies(book.getAvailableCopies() + 1);
         bookRepository.save(book);
-        borrowingRepository.save(borrowing);
+        return borrowingRepository.save(borrowing);
     }
 
     /**

@@ -88,12 +88,12 @@ public class BorrowingController {
     })
     @PostMapping("/return")
     @PreAuthorize("hasRole('PATRON')")
-    public ResponseEntity<Void> returnBook(@Valid @RequestBody ReturnRequest request,
+    public ResponseEntity<BorrowingResponse> returnBook(@Valid @RequestBody ReturnRequest request,
                                            @RequestHeader("Authorization") String authorizationHeader) {
         String token = authorizationHeader.replace("Bearer ", "");
         Long userId = jwtService.extractUserId(token);
-        borrowingService.returnBook(userId, request.borrowingId());
-        return ResponseEntity.ok().build();
+        Borrowing borrowing = borrowingService.returnBook(userId, request.borrowingId());
+        return ResponseEntity.ok(BorrowingMapper.toDto(borrowing));
     }
 
     @Operation(

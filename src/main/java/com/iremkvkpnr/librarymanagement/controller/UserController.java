@@ -25,7 +25,6 @@ import io.swagger.v3.oas.annotations.media.ExampleObject;
 
 @RestController
 @RequestMapping("/api/users")
-@PreAuthorize("hasAnyRole('LIBRARIAN', 'PATRON')")
 @Tag(name = "User Management", description = "Endpoints for managing users in the library.")
 public class UserController {
     private final UserService userService;

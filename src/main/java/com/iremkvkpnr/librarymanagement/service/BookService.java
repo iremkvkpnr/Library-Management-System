@@ -38,6 +38,10 @@ public class BookService {
      */
     @Transactional
     public BookResponse addBook(BookRequest request) {
+        if (bookRepository.existsByIsbn(request.isbn())) {
+            log.error("ISBN already exists: {}", request.isbn());
+            throw new BookValidationException("ISBN already exists: " + request.isbn());
+        }
         Book book = BookMapper.toEntity(request);
         Book saved = bookRepository.save(book);
         log.info("New book added: {}", saved);
