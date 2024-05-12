@@ -1,0 +1,143 @@
+{
+  "info": {
+    "_postman_id": "12345678-1234-1234-1234-1234567890ab",
+    "name": "Library Management API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Authenticate (Login)",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"patron2@example.com\",\n  \"password\": \"admin12345\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/v1/auth/authenticate",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["api", "v1", "auth", "authenticate"]
+        }
+      }
+    },
+    {
+      "name": "Add Book (Librarian)",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "Authorization", "value": "Bearer {{jwt_token}}" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"Test Kitabı\",\n  \"author\": \"Test Yazar\",\n  \"isbn\": \"1234567890\",\n  \"genre\": \"FICTION\",\n  \"totalCopies\": 5,\n  \"publicationDate\": \"2024-05-13\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/books",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["api", "books"]
+        }
+      }
+    },
+    {
+      "name": "Get Book Details",
+      "request": {
+        "method": "GET",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{jwt_token}}" }
+        ],
+        "url": {
+          "raw": "http://localhost:8080/api/books/1",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["api", "books", "1"]
+        }
+      }
+    },
+    {
+      "name": "Search Books",
+      "request": {
+        "method": "GET",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{jwt_token}}" }
+        ],
+        "url": {
+          "raw": "http://localhost:8080/api/books/search?title=Test",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["api", "books", "search"],
+          "query": [
+            { "key": "title", "value": "Test" }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Borrow Book (Patron)",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "Authorization", "value": "Bearer {{jwt_token}}" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"bookId\": 1\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/borrowings",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["api", "borrowings"]
+        }
+      }
+    },
+    {
+      "name": "Return Book (Patron)",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "Authorization", "value": "Bearer {{jwt_token}}" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"borrowingId\": 1\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/borrowings/return",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["api", "borrowings", "return"]
+        }
+      }
+    },
+    {
+      "name": "Borrowing History (Patron)",
+      "request": {
+        "method": "GET",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{jwt_token}}" }
+        ],
+        "url": {
+          "raw": "http://localhost:8080/api/borrowings/history",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["api", "borrowings", "history"]
+        }
+      }
+    }
+  ]
+} 
