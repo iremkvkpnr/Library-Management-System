@@ -4,8 +4,6 @@ import com.iremkvkpnr.librarymanagement.model.dto.request.BookRequest;
 import com.iremkvkpnr.librarymanagement.model.dto.response.BookResponse;
 import com.iremkvkpnr.librarymanagement.model.entity.Book;
 
-import static com.iremkvkpnr.librarymanagement.utils.BookUtils.parseGenre;
-
 public class BookMapper {
     public static Book toEntity(BookRequest bookRequest) {
         if(bookRequest==null) {
@@ -15,7 +13,7 @@ public class BookMapper {
                 .title(bookRequest.title())
                 .author(bookRequest.author())
                 .isbn(bookRequest.isbn())
-                .genre(parseGenre(bookRequest.genre()))
+                .genre(Book.Genre.fromString(bookRequest.genre()))
                 .publicationDate(bookRequest.publicationDate())
                 .availableCopies(bookRequest.totalCopies())
                 .totalCopies(bookRequest.totalCopies())

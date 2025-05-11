@@ -42,8 +42,7 @@ public class Borrowing {
     public enum Status {
         PENDING,
         BORROWED,
-        RETURNED,
-        OVERDUE,
+        RETURNED
     }
 
     @PrePersist

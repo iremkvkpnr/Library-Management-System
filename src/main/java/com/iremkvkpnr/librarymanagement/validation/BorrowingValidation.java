@@ -22,42 +22,25 @@ public class BorrowingValidation {
         this.bookRepository = bookRepository;
     }
 
-    public void validateBorrowing(BorrowingRequest borrowingRequest) {
-        if (borrowingRequest.userId() == null) {
+    public void validateBorrowing(Long userId, Long bookId) {
+        if (userId == null) {
             throw new BorrowingValidationException(BorrowingValidationException.EMPTY_USER_ID);
         }
-
-        if (borrowingRequest.bookId() == null) {
+        if (bookId == null) {
             throw new BorrowingValidationException(BorrowingValidationException.EMPTY_BOOK_ID);
         }
-
-        User user = userRepository.findById(borrowingRequest.userId())
+        User user = userRepository.findById(userId)
                 .orElseThrow(() -> new BorrowingValidationException("User not found"));
 
         if (user.getRole() == User.Role.LIBRARIAN) {
             throw new BorrowingValidationException("Librarians cannot borrow books");
         }
-
-        if (!user.isUserEligibility()) {
-            throw new BorrowingValidationException(BorrowingValidationException.USER_NOT_ELIGIBLE);
-        }
-
-        Book book = bookRepository.findById(borrowingRequest.bookId())
+        Book book = bookRepository.findById(bookId)
                 .orElseThrow(() -> new BorrowingValidationException("Book not found"));
-
-        // Kitapta yeterli kopya olmalı
         if (book.getAvailableCopies() <= 0) {
             throw new BorrowingValidationException(BorrowingValidationException.BOOK_NOT_AVAILABLE);
         }
-
-        // Kitapta zaten ödünç alınmış bir kopya varsa ve başka kopyalar mevcutsa,
-        // ödünç verme işlemi yapılabilir.
-        long borrowedBooksCount = book.getBorrowings().stream()
-                .filter(borrowing -> borrowing.getStatus() == Borrowing.Status.BORROWED)
-                .count();
-
-        if (borrowedBooksCount >= book.getTotalCopies()) {
-            throw new BorrowingValidationException(BorrowingValidationException.BOOK_ALREADY_BORROWED);
-        }
     }
+
+
 }

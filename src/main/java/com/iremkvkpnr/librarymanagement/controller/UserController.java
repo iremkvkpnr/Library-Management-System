@@ -3,75 +3,119 @@ package com.iremkvkpnr.librarymanagement.controller;
 import com.iremkvkpnr.librarymanagement.model.dto.request.UserRequest;
 import com.iremkvkpnr.librarymanagement.model.dto.response.UserResponse;
 import com.iremkvkpnr.librarymanagement.model.entity.User;
-import com.iremkvkpnr.librarymanagement.model.exception.BookValidationException;
-import com.iremkvkpnr.librarymanagement.model.exception.UserPrincipalNotFoundException;
-import com.iremkvkpnr.librarymanagement.model.exception.UserValidationException;
 import com.iremkvkpnr.librarymanagement.model.mapper.UserMapper;
 import com.iremkvkpnr.librarymanagement.service.UserService;
-import com.iremkvkpnr.librarymanagement.validation.UserValidation;
+//import com.iremkvkpnr.librarymanagement.validation.UserValidation;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 //import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-
-import java.time.LocalDateTime;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import com.iremkvkpnr.librarymanagement.model.dto.response.ErrorResponse;
+import io.swagger.v3.oas.annotations.media.ExampleObject;
 
 @RestController
 @RequestMapping("/api/users")
+@PreAuthorize("hasAnyRole('LIBRARIAN', 'PATRON')")
+@Tag(name = "User Management", description = "Endpoints for managing users in the library.")
 public class UserController {
     private final UserService userService;
-    private final UserValidation userValidation;
 
-    public UserController(UserService userService,UserValidation userValidation) {
+    public UserController(UserService userService) {
         this.userService = userService;
-        this.userValidation=userValidation;
     }
 
+    @Operation(
+        summary = "Register a new user",
+        description = "Register a new user (patron or librarian) with the system.",
+        requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(
+            required = true,
+            content = @Content(
+                schema = @Schema(implementation = UserRequest.class)
+            )
+        )
+    )
+    @ApiResponses({
+        @ApiResponse(responseCode = "201", description = "User registered successfully"),
+        @ApiResponse(responseCode = "400", description = "Validation error or bad request", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class), examples = @ExampleObject(value = "{\"message\": \"Validation error\"}"))),
+        @ApiResponse(responseCode = "401", description = "Unauthorized - JWT token missing or invalid", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class), examples = @ExampleObject(value = "{\"message\": \"Unauthorized\"}"))),
+        @ApiResponse(responseCode = "403", description = "Forbidden - insufficient permissions", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class), examples = @ExampleObject(value = "{\"message\": \"Forbidden\"}"))),
+        @ApiResponse(responseCode = "404", description = "Not found", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class), examples = @ExampleObject(value = "{\"message\": \"Not found\"}"))),
+        @ApiResponse(responseCode = "500", description = "Internal server error", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class), examples = @ExampleObject(value = "{\"message\": \"Internal server error\"}")))
+    })
     @PostMapping(value = "/register", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<UserResponse> registerUser(@Valid @RequestBody UserRequest request) {
-        try {
-            userValidation.validateUserInput(request);
-            User user = userService.registerUser(UserMapper.toEntity(request));
-            return new ResponseEntity<>(UserMapper.toDto(user), HttpStatus.CREATED);
-        }
-        catch (UserValidationException ex) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null); // Return 400 if validation fails
-        }
+        UserResponse response = userService.registerUser(request);
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
+    @Operation(
+        summary = "Get user details",
+        description = "Librarians can get detailed information about a user by their ID."
+    )
+    @ApiResponses({
+        @ApiResponse(responseCode = "200", description = "User details returned successfully"),
+        @ApiResponse(responseCode = "400", description = "Bad request"),
+        @ApiResponse(responseCode = "401", description = "Unauthorized - JWT token missing or invalid"),
+        @ApiResponse(responseCode = "403", description = "Forbidden - insufficient permissions"),
+        @ApiResponse(responseCode = "404", description = "User not found"),
+        @ApiResponse(responseCode = "500", description = "Internal server error")
+    })
     @GetMapping("/{id}")
-    public ResponseEntity<UserResponse> getUserDetails(@PathVariable  Long id) {
-
-        try {
-            UserResponse response = userService.getUserDetails(id);
-            return ResponseEntity.ok(response);
-        } catch (UserPrincipalNotFoundException ex) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null); // Return 404 if user not found
-        }
+    @PreAuthorize("hasRole('ROLE_LIBRARIAN')")
+    public ResponseEntity<UserResponse> getUserDetails(
+        @Parameter(description = "ID of the user", example = "1") @PathVariable Long id) {
+        UserResponse response = userService.getUserDetails(id);
+        return ResponseEntity.ok(response);
     }
 
+    @Operation(
+        summary = "Update user information",
+        description = "Librarians can update user information."
+    )
+    @ApiResponses({
+        @ApiResponse(responseCode = "200", description = "User updated successfully"),
+        @ApiResponse(responseCode = "400", description = "Validation error or bad request"),
+        @ApiResponse(responseCode = "401", description = "Unauthorized - JWT token missing or invalid"),
+        @ApiResponse(responseCode = "403", description = "Forbidden - insufficient permissions"),
+        @ApiResponse(responseCode = "404", description = "User not found"),
+        @ApiResponse(responseCode = "500", description = "Internal server error")
+    })
     @PutMapping("/{id}")
-    //@PreAuthorize("hasRole('LIBRARIAN')") //
-    public ResponseEntity<UserResponse> updateUser(@PathVariable Long id,
-                                                   @Valid @RequestBody UserRequest request) {
-        try {
-            userValidation.validateUserInput(request);
-            User updateUser=userService.updateUser(id, UserMapper.toEntity(request));
-            return ResponseEntity.ok(UserMapper.toDto(updateUser));
-        } catch (UserPrincipalNotFoundException ex) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }
+    @PreAuthorize("hasRole('ROLE_LIBRARIAN')")
+    public ResponseEntity<UserResponse> updateUser(
+        @Parameter(description = "ID of the user to update", example = "1") @PathVariable Long id,
+        @Valid @RequestBody UserRequest request) {
+        UserResponse response = userService.updateUser(id, request);
+        return ResponseEntity.ok(response);
     }
 
+    @Operation(
+        summary = "Delete a user",
+        description = "Librarians can delete a user from the system."
+    )
+    @ApiResponses({
+        @ApiResponse(responseCode = "204", description = "User deleted successfully"),
+        @ApiResponse(responseCode = "400", description = "Bad request"),
+        @ApiResponse(responseCode = "401", description = "Unauthorized - JWT token missing or invalid"),
+        @ApiResponse(responseCode = "403", description = "Forbidden - insufficient permissions"),
+        @ApiResponse(responseCode = "404", description = "User not found"),
+        @ApiResponse(responseCode = "500", description = "Internal server error")
+    })
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
-        try {
-            userService.deleteUser(id);
-            return ResponseEntity.noContent().build(); // Return 204 if successful deletion
-        } catch (UserPrincipalNotFoundException ex) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null); // Return 404 if book not found
-        }
+    @PreAuthorize("hasRole('LIBRARIAN')")
+    public ResponseEntity<Void> deleteUser(
+        @Parameter(description = "ID of the user to delete", example = "1") @PathVariable Long id) {
+        userService.deleteUser(id);
+        return ResponseEntity.noContent().build();
     }
 }

@@ -1,9 +1,6 @@
 package com.iremkvkpnr.librarymanagement.model.dto.response;
 
 import com.iremkvkpnr.librarymanagement.model.entity.Book;
-import jakarta.persistence.Column;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;

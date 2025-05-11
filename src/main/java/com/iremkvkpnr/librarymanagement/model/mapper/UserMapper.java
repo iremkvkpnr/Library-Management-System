@@ -3,9 +3,6 @@ package com.iremkvkpnr.librarymanagement.model.mapper;
 import com.iremkvkpnr.librarymanagement.model.dto.request.UserRequest;
 import com.iremkvkpnr.librarymanagement.model.dto.response.UserResponse;
 import com.iremkvkpnr.librarymanagement.model.entity.User;
-import jakarta.persistence.*;
-
-import java.time.LocalDateTime;
 
 public class UserMapper {
     public static User toEntity(UserRequest userRequest) {
@@ -15,7 +12,6 @@ public class UserMapper {
                 .password(userRequest.password())
                 .phone(userRequest.phone())
                 .role(userRequest.role())
-                .userEligibility(userRequest.userEligibility())
                 .build();
     }
 
@@ -26,7 +22,6 @@ public class UserMapper {
                 user.getEmail(),
                 user.getPhone(),
                 user.getRole(),
-                user.getUserEligibilityField(),
                 user.getCreatedAt()
         );
     }

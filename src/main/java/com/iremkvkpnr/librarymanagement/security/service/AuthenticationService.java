@@ -13,6 +13,10 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+/**
+ * Service layer for authentication and registration operations.
+ * Handles user registration and authentication, and issues JWT tokens.
+ */
 @Service
 @RequiredArgsConstructor
 public class AuthenticationService {
@@ -21,8 +25,13 @@ public class AuthenticationService {
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
 
+    /**
+     * Registers a new user and returns a JWT token.
+     * @param request Registration request DTO
+     * @return Authentication response with JWT token
+     */
     public AuthenticationResponse register(RegisterRequest request) {
-        var user = User.builder()
+        User user = User.builder()
                 .name(request.name())
                 .email(request.email())
                 .password(passwordEncoder.encode(request.password()))
@@ -30,12 +39,18 @@ public class AuthenticationService {
                 .role(User.Role.PATRON)
                 .build();
         userRepository.save(user);
-        var jwtToken = jwtService.generateToken(user);
+        String jwtToken = jwtService.generateToken(user);
         return AuthenticationResponse.builder()
                 .token(jwtToken)
                 .build();
     }
 
+    /**
+     * Authenticates a user and returns a JWT token if credentials are valid.
+     * @param request Authentication request DTO
+     * @return Authentication response with JWT token
+     * @throws UserValidationException if credentials are invalid
+     */
     public AuthenticationResponse authenticate(AuthenticationRequest request) {
         try {
             authenticationManager.authenticate(

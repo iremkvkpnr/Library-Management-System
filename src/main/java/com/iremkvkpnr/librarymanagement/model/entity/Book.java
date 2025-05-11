@@ -51,7 +51,15 @@ public class Book {
         HISTORY,
         FANTASY,
         BIOGRAPHY,
-        OTHER
+        OTHER;
+
+        public static Genre fromString(String genre) {
+            try {
+                return Genre.valueOf(genre.toUpperCase());
+            } catch (IllegalArgumentException e) {
+                throw new com.iremkvkpnr.librarymanagement.model.exception.BookValidationException("Invalid genre specified: " + genre);
+            }
+        }
     }
 
     @PrePersist

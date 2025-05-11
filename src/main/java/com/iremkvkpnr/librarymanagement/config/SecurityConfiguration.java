@@ -12,6 +12,10 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+/**
+ * Security configuration for the application.
+ * Configures authentication, authorization, JWT filter, and endpoint access rules.
+ */
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity(prePostEnabled = true)
@@ -21,6 +25,16 @@ public class SecurityConfiguration {
     private final JwtAuthenticationFilter jwtAuthFilter;
     private final AuthenticationProvider authenticationProvider;
 
+    /**
+     * Configures the security filter chain for HTTP requests.
+     * - Disables CSRF
+     * - Sets endpoint access rules
+     * - Adds JWT authentication filter
+     * - Configures stateless session management
+     * @param http HttpSecurity object
+     * @return Configured SecurityFilterChain
+     * @throws Exception if configuration fails
+     */
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
         http
@@ -41,6 +55,5 @@ public class SecurityConfiguration {
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
-
     }
 }

@@ -7,13 +7,12 @@ import com.iremkvkpnr.librarymanagement.model.entity.Borrowing;
 import com.iremkvkpnr.librarymanagement.model.entity.User;
 
 import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
 
 public class BorrowingMapper {
 
     public static Borrowing toEntity(BorrowingRequest request, User user, Book book) {
         LocalDate today = LocalDate.now();
-        LocalDate dueDate = today.plusDays(14); // 2 hafta varsayılan
+        LocalDate dueDate = today.plusDays(14); // 2 WEEKS for overdue
 
         return Borrowing.builder()
                 .user(user)
