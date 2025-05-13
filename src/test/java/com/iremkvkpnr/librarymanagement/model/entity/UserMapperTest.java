@@ -2,7 +2,6 @@ package com.iremkvkpnr.librarymanagement.model.entity;
 
 import com.iremkvkpnr.librarymanagement.model.dto.request.UserRequest;
 import com.iremkvkpnr.librarymanagement.model.dto.response.UserResponse;
-import com.iremkvkpnr.librarymanagement.model.entity.User;
 import com.iremkvkpnr.librarymanagement.model.mapper.UserMapper;
 import com.iremkvkpnr.librarymanagement.model.exception.UserValidationException;
 import org.junit.jupiter.api.Test;

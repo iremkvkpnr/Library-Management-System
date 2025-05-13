@@ -2,9 +2,6 @@ package com.iremkvkpnr.librarymanagement.model.entity;
 
 import com.iremkvkpnr.librarymanagement.model.dto.request.BorrowingRequest;
 import com.iremkvkpnr.librarymanagement.model.dto.response.BorrowingResponse;
-import com.iremkvkpnr.librarymanagement.model.entity.Borrowing;
-import com.iremkvkpnr.librarymanagement.model.entity.Book;
-import com.iremkvkpnr.librarymanagement.model.entity.User;
 import com.iremkvkpnr.librarymanagement.model.mapper.BorrowingMapper;
 import org.junit.jupiter.api.Test;
 import java.time.LocalDate;

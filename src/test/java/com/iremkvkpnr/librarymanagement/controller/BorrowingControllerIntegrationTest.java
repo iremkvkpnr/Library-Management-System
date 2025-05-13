@@ -66,7 +66,7 @@ public class BorrowingControllerIntegrationTest {
         bookRepository.deleteAll();
         borrowingRepository.deleteAll();
 
-        // Admin kullanıcısı oluştur
+        // create admin user
         User admin = new User();
         admin.setEmail("admin@test.com");
         admin.setPassword(passwordEncoder.encode("admin123"));
@@ -75,7 +75,7 @@ public class BorrowingControllerIntegrationTest {
         admin.setPhone("1234567890");
         userRepository.save(admin);
 
-        // Test kullanıcısı oluştur
+        // create test user
         testUser = new User();
         testUser.setEmail("user@test.com");
         testUser.setPassword("password");
@@ -84,7 +84,7 @@ public class BorrowingControllerIntegrationTest {
         testUser.setPhone("1234567890");
         testUser = userRepository.save(testUser);
 
-        // Test kitabı oluştur
+        // create test book
         testBook = new Book();
         testBook.setTitle("Test Book");
         testBook.setAuthor("Test Author");
@@ -95,7 +95,7 @@ public class BorrowingControllerIntegrationTest {
         testBook.setPublicationDate(LocalDate.now());
         testBook = bookRepository.save(testBook);
 
-        // Test ödünç alma kaydı oluştur
+        // create borrowing register
         testBorrowing = new Borrowing();
         testBorrowing.setUser(testUser);
         testBorrowing.setBook(testBook);
@@ -103,7 +103,7 @@ public class BorrowingControllerIntegrationTest {
         testBorrowing.setDueDate(LocalDate.now().plusDays(14));
         borrowingRepository.save(testBorrowing);
 
-        // Token'ları oluştur
+        // create token
         adminToken = "Bearer " + jwtService.generateToken(admin);
         userToken = "Bearer " + jwtService.generateToken(testUser);
     }
@@ -150,11 +150,6 @@ public class BorrowingControllerIntegrationTest {
     }
 
     @Test
-    void getUserBorrowingHistory_InvalidUserId_ReturnsNotFound() throws Exception {
-        // Bu test artık anlamsız çünkü endpoint userId almıyor, bu yüzden kaldırıyorum veya anlamlı şekilde güncellenmeli.
-    }
-
-    @Test
     void getOverdueBooks_ReturnsOverdueList() throws Exception {
         mockMvc.perform(get("/api/borrowings/overdue-books")
                 .header("Authorization", adminToken))
@@ -173,18 +168,15 @@ public class BorrowingControllerIntegrationTest {
     @Test
     @WithMockUser(roles = "PATRON")
     public void getUserBorrowingHistory_WithUserRole_ReturnsOk() throws Exception {
-        // ... existing code ...
     }
 
     @Test
     @WithMockUser(roles = "LIBRARIAN")
     public void getAllBorrowingHistory_WithLibrarianRole_ReturnsOk() throws Exception {
-        // ... existing code ...
     }
 
     @Test
     @WithMockUser(roles = "LIBRARIAN")
     public void getOverdueBooksReport_WithLibrarianRole_ReturnsOk() throws Exception {
-        // ... existing code ...
     }
 } 

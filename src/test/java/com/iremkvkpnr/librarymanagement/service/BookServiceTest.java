@@ -6,7 +6,6 @@ import com.iremkvkpnr.librarymanagement.model.dto.response.BookResponse;
 import com.iremkvkpnr.librarymanagement.model.entity.Book;
 import com.iremkvkpnr.librarymanagement.model.exception.BookNotFoundException;
 import com.iremkvkpnr.librarymanagement.model.exception.BookValidationException;
-import com.iremkvkpnr.librarymanagement.model.mapper.BookMapper;
 import com.iremkvkpnr.librarymanagement.repository.BookRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -269,8 +268,6 @@ class BookServiceTest {
             5,
             LocalDate.now().minusYears(100)
         );
-        // Eğer publicationDate için özel bir validasyon yoksa bu test başarısız olabilir, kontrol et.
-        // assertThrows(BookValidationException.class, () -> bookService.addBook(request));
     }
 
     @Test

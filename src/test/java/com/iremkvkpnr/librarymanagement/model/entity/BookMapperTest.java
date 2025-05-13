@@ -2,7 +2,6 @@ package com.iremkvkpnr.librarymanagement.model.entity;
 
 import com.iremkvkpnr.librarymanagement.model.dto.request.BookRequest;
 import com.iremkvkpnr.librarymanagement.model.dto.response.BookResponse;
-import com.iremkvkpnr.librarymanagement.model.entity.Book;
 import com.iremkvkpnr.librarymanagement.model.mapper.BookMapper;
 import com.iremkvkpnr.librarymanagement.model.exception.BookValidationException;
 import org.junit.jupiter.api.Test;

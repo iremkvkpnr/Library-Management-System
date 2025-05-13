@@ -17,8 +17,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.security.test.context.support.WithMockUser;
 
-import java.time.LocalDate;
-
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -51,7 +49,7 @@ public class UserControllerIntegrationTest {
     void setUp() {
         userRepository.deleteAll();
 
-        // Admin kullanıcısı oluştur
+        // create admin user
         User admin = new User();
         admin.setEmail("admin@test.com");
         admin.setPassword(passwordEncoder.encode("admin123"));
@@ -60,7 +58,7 @@ public class UserControllerIntegrationTest {
         admin.setPhone("1234567890");
         userRepository.save(admin);
 
-        // Normal kullanıcı oluştur
+        // create test user
         testUser = new User();
         testUser.setEmail("user@test.com");
         testUser.setPassword(passwordEncoder.encode("user123"));
@@ -69,7 +67,7 @@ public class UserControllerIntegrationTest {
         testUser.setPhone("9876543210");
         userRepository.save(testUser);
 
-        // Token'ları oluştur
+        // create token
         adminToken = "Bearer " + jwtService.generateToken(admin);
         userToken = "Bearer " + jwtService.generateToken(testUser);
     }
@@ -132,24 +130,20 @@ public class UserControllerIntegrationTest {
     @Test
     @WithMockUser(roles = "LIBRARIAN")
     public void getAllUsers_WithLibrarianRole_ReturnsOk() throws Exception {
-        // ... existing code ...
     }
 
     @Test
     @WithMockUser(roles = "LIBRARIAN")
     public void getUserById_WithLibrarianRole_ReturnsOk() throws Exception {
-        // ... existing code ...
     }
 
     @Test
     @WithMockUser(roles = "LIBRARIAN")
     public void updateUser_WithLibrarianRole_ReturnsOk() throws Exception {
-        // ... existing code ...
     }
 
     @Test
     @WithMockUser(roles = "LIBRARIAN")
     public void deleteUser_WithLibrarianRole_ReturnsNoContent() throws Exception {
-        // ... existing code ...
     }
 } 

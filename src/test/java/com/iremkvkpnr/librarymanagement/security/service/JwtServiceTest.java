@@ -2,7 +2,6 @@ package com.iremkvkpnr.librarymanagement.security.service;
 
 import com.iremkvkpnr.librarymanagement.model.entity.User;
 import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.ExpiredJwtException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -12,7 +11,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.test.util.ReflectionTestUtils;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -119,11 +117,9 @@ class JwtServiceTest {
 
     @Test
     void isTokenValid_ExpiredToken() {
-        // Süresi dolmuş token oluştur
         ReflectionTestUtils.setField(jwtService, "jwtExpiration", -1000L);
         String expiredToken = jwtService.generateToken(testUser);
         
-        // Token'ın geçersiz olduğunu kontrol et
         assertThrows(ExpiredJwtException.class, () -> {
             jwtService.isTokenValid(expiredToken, testUser);
         });

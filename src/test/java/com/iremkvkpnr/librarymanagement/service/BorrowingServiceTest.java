@@ -5,8 +5,6 @@ import com.iremkvkpnr.librarymanagement.model.entity.Book;
 import com.iremkvkpnr.librarymanagement.model.entity.Borrowing;
 import com.iremkvkpnr.librarymanagement.model.entity.User;
 import com.iremkvkpnr.librarymanagement.model.exception.BorrowingValidationException;
-import com.iremkvkpnr.librarymanagement.model.exception.UserPrincipalNotFoundException;
-import com.iremkvkpnr.librarymanagement.model.exception.UserValidationException;
 import com.iremkvkpnr.librarymanagement.repository.BookRepository;
 import com.iremkvkpnr.librarymanagement.repository.BorrowingRepository;
 import com.iremkvkpnr.librarymanagement.repository.UserRepository;
@@ -25,7 +23,6 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)

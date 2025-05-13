@@ -122,7 +122,7 @@ class BorrowingEntityTest {
     }
 
     @Test
-    @DisplayName("Borrowing.Status enum valueOf ve toString testleri")
+    @DisplayName("Borrowing.Status enum valueOf ve toString tests")
     void borrowingStatusEnumValueOfAndToString() {
         for (Borrowing.Status status : Borrowing.Status.values()) {
             assertEquals(status, Borrowing.Status.valueOf(status.name()));
@@ -131,7 +131,7 @@ class BorrowingEntityTest {
     }
 
     @Test
-    @DisplayName("Borrowing borrowDate ve dueDate aynı anda null olmalı")
+    @DisplayName("Borrowing borrowDate and dueDate should null")
     void borrowingShouldAllowBothBorrowDateAndDueDateNull() {
         Borrowing borrowing = new Borrowing();
         borrowing.setBorrowDate(null);
@@ -141,7 +141,7 @@ class BorrowingEntityTest {
     }
 
     @Test
-    @DisplayName("Borrowing.Status valueOf null ve boş string için exception fırlatmalı")
+    @DisplayName("Borrowing.Status valueOf null and blank string should throw exception ")
     void borrowingStatusValueOfShouldThrowExceptionForNullOrEmpty() {
         assertThrows(NullPointerException.class, () -> Borrowing.Status.valueOf(null));
         assertThrows(IllegalArgumentException.class, () -> Borrowing.Status.valueOf(""));

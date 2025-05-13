@@ -6,7 +6,6 @@ import com.iremkvkpnr.librarymanagement.model.entity.Borrowing;
 import com.iremkvkpnr.librarymanagement.model.entity.User;
 import com.iremkvkpnr.librarymanagement.model.exception.UserPrincipalNotFoundException;
 import com.iremkvkpnr.librarymanagement.model.exception.UserValidationException;
-import com.iremkvkpnr.librarymanagement.model.mapper.UserMapper;
 import com.iremkvkpnr.librarymanagement.repository.BorrowingRepository;
 import com.iremkvkpnr.librarymanagement.repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
