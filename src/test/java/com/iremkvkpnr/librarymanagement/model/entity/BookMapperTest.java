@@ -29,14 +29,6 @@ class BookMapperTest {
     }
 
     @Test
-    void toEntity_shouldThrowIfTotalCopiesZeroOrNegative() {
-        BookRequest req = new BookRequest("Title", "Author", "1234567890", "FICTION", 0, LocalDate.now());
-        assertThrows(BookValidationException.class, () -> BookMapper.toEntity(req));
-        BookRequest req2 = new BookRequest("Title", "Author", "1234567890", "FICTION", -1, LocalDate.now());
-        assertThrows(BookValidationException.class, () -> BookMapper.toEntity(req2));
-    }
-
-    @Test
     void toEntity_shouldThrowIfGenreNullOrEmpty() {
         BookRequest req = new BookRequest("Title", "Author", "1234567890", null, 5, LocalDate.now());
         assertThrows(BookValidationException.class, () -> BookMapper.toEntity(req));

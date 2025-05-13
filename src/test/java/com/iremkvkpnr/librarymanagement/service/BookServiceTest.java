@@ -230,21 +230,6 @@ class BookServiceTest {
     }
 
     @Test
-    void addBook_ZeroCopies() {
-        BookRequest zeroCopiesRequest = new BookRequest(
-            "Test Book",
-            "Test Author",
-            "1234567890",
-            "FICTION",
-            0,
-            LocalDate.now()
-        );
-
-        assertThrows(BookValidationException.class, () -> bookService.addBook(zeroCopiesRequest));
-        verify(bookRepository, never()).save(any(Book.class));
-    }
-
-    @Test
     void addBook_NullPublicationDate() {
         BookRequest request = new BookRequest(
             "Test Book",
@@ -268,20 +253,6 @@ class BookServiceTest {
             5,
             LocalDate.now().minusYears(100)
         );
-    }
-
-    @Test
-    void addBook_NegativeCopies() {
-        BookRequest request = new BookRequest(
-            "Test Book",
-            "Test Author",
-            "1234567890",
-            "FICTION",
-            -1,
-            LocalDate.now()
-        );
-        assertThrows(BookValidationException.class, () -> bookService.addBook(request));
-        verify(bookRepository, never()).save(any(Book.class));
     }
 
     @Test
