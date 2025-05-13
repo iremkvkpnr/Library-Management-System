@@ -2,15 +2,11 @@ package com.iremkvkpnr.librarymanagement.controller;
 
 import com.iremkvkpnr.librarymanagement.model.dto.request.UserRequest;
 import com.iremkvkpnr.librarymanagement.model.dto.response.UserResponse;
-import com.iremkvkpnr.librarymanagement.model.entity.User;
-import com.iremkvkpnr.librarymanagement.model.mapper.UserMapper;
 import com.iremkvkpnr.librarymanagement.service.UserService;
-//import com.iremkvkpnr.librarymanagement.validation.UserValidation;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-//import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import io.swagger.v3.oas.annotations.Operation;

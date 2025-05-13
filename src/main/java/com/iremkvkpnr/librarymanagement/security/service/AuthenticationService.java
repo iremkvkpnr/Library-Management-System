@@ -6,7 +6,6 @@ import com.iremkvkpnr.librarymanagement.model.dto.response.AuthenticationRespons
 import com.iremkvkpnr.librarymanagement.model.entity.User;
 import com.iremkvkpnr.librarymanagement.model.exception.UserValidationException;
 import com.iremkvkpnr.librarymanagement.repository.UserRepository;
-import com.iremkvkpnr.librarymanagement.security.service.JwtService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

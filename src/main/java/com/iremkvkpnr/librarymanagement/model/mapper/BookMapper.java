@@ -10,9 +10,6 @@ public class BookMapper {
         if(bookRequest==null) {
             throw new BookValidationException("Book request cannot be null");
         }
-        if(bookRequest.totalCopies() <= 0) {
-            throw new BookValidationException("Total copies must be greater than zero");
-        }
         if(bookRequest.genre() == null || bookRequest.genre().trim().isEmpty()) {
             throw new BookValidationException("Genre must be specified");
         }

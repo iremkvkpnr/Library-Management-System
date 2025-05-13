@@ -3,7 +3,6 @@ package com.iremkvkpnr.librarymanagement.service;
 import com.iremkvkpnr.librarymanagement.model.entity.Book;
 import com.iremkvkpnr.librarymanagement.model.entity.Borrowing;
 import com.iremkvkpnr.librarymanagement.model.entity.User;
-import com.iremkvkpnr.librarymanagement.model.exception.BorrowingNotFoundException;
 import com.iremkvkpnr.librarymanagement.model.exception.BorrowingValidationException;
 import com.iremkvkpnr.librarymanagement.model.exception.UserPrincipalNotFoundException;
 import com.iremkvkpnr.librarymanagement.model.exception.UserValidationException;
@@ -11,7 +10,6 @@ import com.iremkvkpnr.librarymanagement.repository.BookRepository;
 import com.iremkvkpnr.librarymanagement.repository.BorrowingRepository;
 import com.iremkvkpnr.librarymanagement.repository.UserRepository;
 import com.iremkvkpnr.librarymanagement.validation.BorrowingValidation;
-import com.iremkvkpnr.librarymanagement.model.dto.request.BorrowingRequest;
 import com.iremkvkpnr.librarymanagement.model.dto.response.BorrowingResponse;
 import com.iremkvkpnr.librarymanagement.model.mapper.BorrowingMapper;
 import jakarta.transaction.Transactional;
@@ -20,11 +18,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
-import java.util.Optional;
 
 /**
  * Service layer for borrowing operations.

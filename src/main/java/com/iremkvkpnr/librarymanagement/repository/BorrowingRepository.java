@@ -11,8 +11,6 @@ import java.util.List;
 import java.util.Optional;
 
 public interface BorrowingRepository extends JpaRepository<Borrowing, Long> {
-    List<Borrowing> findByUser(User user);
-    List<Borrowing> findByBook(Book book);
     List<Borrowing> findByUserId(Long userId);
 
     @Query("SELECT b FROM Borrowing b WHERE b.dueDate < CURRENT_DATE AND b.returnDate IS NULL")

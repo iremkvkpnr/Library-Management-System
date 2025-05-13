@@ -1,8 +1,6 @@
 package com.iremkvkpnr.librarymanagement.validation;
 
-import com.iremkvkpnr.librarymanagement.model.dto.request.BorrowingRequest;
 import com.iremkvkpnr.librarymanagement.model.entity.Book;
-import com.iremkvkpnr.librarymanagement.model.entity.Borrowing;
 import com.iremkvkpnr.librarymanagement.model.entity.User;
 import com.iremkvkpnr.librarymanagement.model.exception.BorrowingValidationException;
 import com.iremkvkpnr.librarymanagement.repository.BookRepository;

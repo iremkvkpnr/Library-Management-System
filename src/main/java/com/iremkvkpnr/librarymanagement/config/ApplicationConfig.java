@@ -31,7 +31,7 @@ public class ApplicationConfig {
     public AuthenticationProvider authenticationProvider(PasswordEncoder passwordEncoder) {
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
         authProvider.setUserDetailsService(userDetailsService());
-        authProvider.setPasswordEncoder(passwordEncoder);  // passwordEncoder bean'i parametre olarak alındı
+        authProvider.setPasswordEncoder(passwordEncoder);
         return authProvider;
     }
 

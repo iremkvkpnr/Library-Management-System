@@ -14,7 +14,7 @@ public class ReactiveBookService {
         this.bookRepository = bookRepository;
     }
 
-    // Kitapların müsaitlik durumunu periyodik olarak stream eden örnek
+    // Example of periodically streaming books in compatibility ranges
     public Flux<Book> streamBookAvailability() {
         return Flux.interval(Duration.ofSeconds(1))
                 .flatMap(tick -> Flux.fromIterable(bookRepository.findAll()));
