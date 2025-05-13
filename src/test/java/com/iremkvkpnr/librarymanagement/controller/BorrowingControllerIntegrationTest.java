@@ -29,7 +29,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
-@ActiveProfiles("test")
+@ActiveProfiles("h2")
 @Transactional
 public class BorrowingControllerIntegrationTest {
 
@@ -130,7 +130,6 @@ public class BorrowingControllerIntegrationTest {
 
     @Test
     void returnBook_AlreadyReturned_ReturnsBadRequest() throws Exception {
-        // Kitabı iade et
         testBorrowing.setReturnDate(LocalDate.now());
         borrowingRepository.save(testBorrowing);
 
