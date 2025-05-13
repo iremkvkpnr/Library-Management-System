@@ -137,6 +137,8 @@ open target/site/jacoco/index.html
 ## 📬 Postman Collection
 
 * Import the `postman_collection.json` file into Postman for all endpoints.
+*   👉 [Library Management Postman Collection](https://postman.co/workspace/My-Workspace~a497d4b2-3737-491b-84a3-171c38a8f555/collection/31853077-e7d9d819-41a9-4eeb-88f9-6326ec09f82e?action=share&creator=31853077&active-environment=31853077-b8103c2a-0c1c-44d5-9ce2-a35c4a73a226)
+
 
 ---
 
