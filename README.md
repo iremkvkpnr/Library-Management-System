@@ -51,11 +51,15 @@ docker-compose up --build
 - Uygulama: [http://localhost:8080](http://localhost:8080)
 - PostgreSQL: localhost:5432, user: postgres, pass: 123, db: librarydb
 
+![postgre Screenshot](README.md-images/postgre.jpeg)
+
 ### 3. Lokal Geliştirme (H2 ile)
 ```sh
 ./mvnw spring-boot:run -Dspring-boot.run.profiles=h2
 ```
 - H2 Console: [http://localhost:8080/h2-console](http://localhost:8080/h2-console)
+
+![h2 Screenshot](README.md-images/h2database.jpeg)
 
 ### 4. Swagger/OpenAPI
 - [http://localhost:8080/swagger-ui.html](http://localhost:8080/swagger-ui.html)
@@ -116,6 +120,7 @@ erDiagram
 ./mvnw clean test jacoco:report
 open target/site/jacoco/index.html
 ```
+![Test Screenshot](README.md-images/test.jpeg)
 
 ---
 
@@ -158,7 +163,10 @@ Bu projeyi Docker ve Docker Compose kullanarak kolayca çalıştırabilirsiniz. 
    ```sh
    docker-compose up --build
    ```
+   
    Bu komut, hem uygulama hem de PostgreSQL veritabanı için gerekli imajları oluşturur ve konteynerleri başlatır.
+
+![Docker Screenshot](README.md-images/docker.jpeg)
 
 3. **Uygulamaya erişim:**
    - Uygulama: [http://localhost:8080](http://localhost:8080)
